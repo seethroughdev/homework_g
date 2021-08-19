@@ -4,9 +4,30 @@ import * as utils from "./utils";
 import "./App.css";
 
 function App() {
-  const { dogs, dogsFetchStatus } = utils.useDogsList(false);
+  const [dogFetchOffset, setDogFetchOffset] = React.useState(0);
+  const { dogs, dogsFetchStatus } = utils.useDogsList(dogFetchOffset);
+  const observerRef = React.useRef();
 
-  console.log(dogs, dogsFetchStatus);
+  const lastDogRef = React.useCallback(
+    (ref) => {
+      if (!ref || dogsFetchStatus === "LOADING") return;
+
+      // disconnect observer
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+
+      observerRef.current = new IntersectionObserver((entries) => {
+        if (entries.length < 1) return;
+        setDogFetchOffset((offset) =>
+          entries[0].isIntersecting ? offset + 1 : offset
+        );
+      });
+
+      observerRef.current.observe(ref);
+    },
+    [dogsFetchStatus]
+  );
 
   return (
     <Container className="p-3">
@@ -15,9 +36,10 @@ function App() {
       </div>
       <h3>{dogsFetchStatus}</h3>
       <ul>
-        {dogs.map((d) => {
+        {dogs.map((d, i) => {
+          const isLast = i === dogs.length - 1;
           return (
-            <li key={d}>
+            <li key={d} ref={isLast ? lastDogRef : undefined}>
               <img src={d} alt="dog" />
             </li>
           );

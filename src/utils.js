@@ -2,17 +2,16 @@ import * as React from "react";
 export const MAX_SIZE = 500;
 export const DOG_API_URL = `https://dog.ceo/api/breeds/image/random`;
 
-export const useDogsList = (stopFetching) => {
+export const useDogsList = (dogFetchOffset) => {
   const [dogs, setDogs] = React.useState([]);
   const [dogsFetchStatus, setDogsFetchStatus] = React.useState("IDLE");
 
   React.useEffect(() => {
-    if (stopFetching) return;
-
     setDogsFetchStatus("LOADING");
 
     const fetchRandomDog = async function () {
       try {
+        console.log("fetching dog");
         const resp = await fetch(DOG_API_URL, {});
         const json = await resp.json();
         setDogs((d) => [...d, json.message]);
@@ -23,7 +22,7 @@ export const useDogsList = (stopFetching) => {
     };
 
     fetchRandomDog();
-  }, [stopFetching]);
+  }, [dogFetchOffset]);
 
   return { dogs, dogsFetchStatus };
 };
