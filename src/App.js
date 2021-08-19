@@ -1,6 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import * as utils from "./utils";
+import { useDogsList } from "./hooks/useDogsList";
+// import * as utils from "./utils";
 import "./App.css";
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
   const [dogFetchOffset, setDogFetchOffset] = React.useState(0);
 
   // All state of the dogs is returned here, we wrap the fetch in a custom hook to support fetchStatus as well.
-  const { dogs, dogsFetchStatus } = utils.useDogsList(dogFetchOffset);
+  const { dogs, dogsFetchStatus } = useDogsList(dogFetchOffset);
 
   // We are using the Intersection Observer API to watch for visible dom elements on the screen,
   // https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
@@ -48,9 +49,12 @@ function App() {
         <h1 className="display-1 text-white">Infinite Dogs!</h1>
       </div>
       <ul className="dogs-list">
-        {dogs.map((d, i) => (
-          <li key={d} ref={i === dogs.length - 1 ? lastDogRef : undefined}>
-            <img src={d} alt="dog" />
+        {dogs.map((dog, i) => (
+          <li
+            key={dog.url}
+            ref={i === dogs.length - 1 ? lastDogRef : undefined}
+          >
+            <img src={dog.src} alt="dog" />
           </li>
         ))}
       </ul>
