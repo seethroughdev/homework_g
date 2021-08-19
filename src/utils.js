@@ -1,17 +1,21 @@
 import * as React from "react";
-export const MAX_SIZE = 500;
-export const DOG_API_URL = `https://dog.ceo/api/breeds/image/random`;
+const MAX_SIZE = 500;
+const DOG_API_URL = `https://dog.ceo/api/breeds/image/random`;
 
 export const useDogsList = (dogFetchOffset) => {
+  /**
+   * This custom React hook manaages fetching random dogs when offset changes,
+   * as well as managing the fetchStatus of the app.
+   * Normally, we would make this an enum of IDLE | ERROR | LOADING
+   */
   const [dogs, setDogs] = React.useState([]);
   const [dogsFetchStatus, setDogsFetchStatus] = React.useState("IDLE");
 
   React.useEffect(() => {
-    setDogsFetchStatus("LOADING");
-
+    // wrapping in try catch to preserve current dogs, but update fetchStatus
     const fetchRandomDog = async function () {
+      setDogsFetchStatus("LOADING");
       try {
-        console.log("fetching dog");
         const resp = await fetch(DOG_API_URL, {});
         const json = await resp.json();
         setDogs((d) => [...d, json.message]);

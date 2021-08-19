@@ -4,10 +4,23 @@ import * as utils from "./utils";
 import "./App.css";
 
 function App() {
+  // We use the "fetchOffset" to signify changes to the React, useEffect.  This allows us to have full control
+  // when we want the useDogsList to attempt a new fetch.
   const [dogFetchOffset, setDogFetchOffset] = React.useState(0);
+
+  // All state of the dogs is returned here, we wrap the fetch in a custom hook to support fetchStatus as well.
   const { dogs, dogsFetchStatus } = utils.useDogsList(dogFetchOffset);
+
+  // We are using the Intersection Observer API to watch for visible dom elements on the screen,
+  // https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+  // there are other options we can use, but this one is natively supported and more efficient than watching for
+  // scroll events. It can also be polyfilled easily if necessary.
   const observerRef = React.useRef();
 
+  // Wrapping a ref in a useCallback is a way to apply changes to the actual react dom implementation.
+  // https://medium.com/welldone-software/usecallback-might-be-what-you-meant-by-useref-useeffect-773bc0278ae
+  // here we watch for fetchStatus changes, and update the observer.  It also allows us to manually force the
+  // dogs fetch by changing the offset.
   const lastDogRef = React.useCallback(
     (ref) => {
       if (!ref || dogsFetchStatus === "LOADING") return;
