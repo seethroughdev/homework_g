@@ -1,6 +1,34 @@
+import * as React from "react";
 export const MAX_SIZE = 500;
+export const DOG_API_URL = `https://dog.ceo/api/breeds/image/random`;
 
-export default async function getImageDataFromUrl(url, callback) {
+export const useDogsList = (stopFetching) => {
+  const [dogs, setDogs] = React.useState([]);
+  const [dogsFetchStatus, setDogsFetchStatus] = React.useState("IDLE");
+
+  React.useEffect(() => {
+    if (stopFetching) return;
+
+    setDogsFetchStatus("LOADING");
+
+    const fetchRandomDog = async function () {
+      try {
+        const resp = await fetch(DOG_API_URL, {});
+        const json = await resp.json();
+        setDogs((d) => [...d, json.message]);
+        setDogsFetchStatus("IDLE");
+      } catch {
+        setDogsFetchStatus("ERROR");
+      }
+    };
+
+    fetchRandomDog();
+  }, [stopFetching]);
+
+  return { dogs, dogsFetchStatus };
+};
+
+export const getImageDataFromUrl = (url, callback) => {
   /*
   Given a URL for an image, gets the binary data for the image. The binary data
   is passed to the provided callback function.
@@ -15,7 +43,7 @@ export default async function getImageDataFromUrl(url, callback) {
   from https://stackoverflow.com/a/39593964
   */
   const img = new Image();
-  img.setAttribute('crossOrigin', 'anonymous');
+  img.setAttribute("crossOrigin", "anonymous");
   img.onload = function (a) {
     const canvas = document.createElement("canvas");
 
@@ -34,16 +62,15 @@ export default async function getImageDataFromUrl(url, callback) {
     ctx.drawImage(img, 0, 0, img.width * ratio, img.height * ratio);
 
     var dataURI = canvas.toDataURL("image/jpg");
-      
+
     // convert base64/URLEncoded data component to raw binary data held in a string
     var byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0)
-      byteString = atob(dataURI.split(',')[1]);
-    else
-      byteString = unescape(dataURI.split(',')[1]);
+    if (dataURI.split(",")[0].indexOf("base64") >= 0)
+      byteString = atob(dataURI.split(",")[1]);
+    else byteString = unescape(dataURI.split(",")[1]);
 
     // separate out the mime component
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
 
     // write the bytes of the string to a typed array
     var ia = new Uint8Array(byteString.length);
@@ -52,8 +79,7 @@ export default async function getImageDataFromUrl(url, callback) {
     }
 
     return callback(new Blob([ia], { type: mimeString }));
-  }
-  
+  };
+
   img.src = url;
-}
-  
+};
