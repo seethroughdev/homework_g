@@ -1,6 +1,21 @@
 import * as React from "react";
 const MAX_SIZE = 500;
-const DOG_API_URL = `https://dog.ceo/api/breeds/image/random`;
+const DOG_API_URL = "https://dog.ceo/api/breeds/image/random";
+const OPEN_VISION_API = "https://api.openvisionapi.com/api/v1/detection";
+
+export const detectObject = async (blob) => {
+  const formData = new FormData();
+  formData.append("model", "yolov4");
+  formData.append("image", blob);
+
+  const resp = await fetch(OPEN_VISION_API, {
+    method: "post",
+    body: formData,
+  });
+
+  const json = await resp.json();
+  console.log("jjjj", json.predictions);
+};
 
 export const useDogsList = (dogFetchOffset) => {
   /**
@@ -18,6 +33,9 @@ export const useDogsList = (dogFetchOffset) => {
       try {
         const resp = await fetch(DOG_API_URL, {});
         const json = await resp.json();
+
+        getImageDataFromUrl(json.message, detectObject);
+
         setDogs((d) => [...d, json.message]);
         setDogsFetchStatus("IDLE");
       } catch {

@@ -25,7 +25,7 @@ function App() {
     (ref) => {
       if (!ref || dogsFetchStatus === "LOADING") return;
 
-      // disconnect observer
+      // disconnect observer if it exists
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
