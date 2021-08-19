@@ -18,6 +18,9 @@ ul.dogs-list li img {
 
 .imageContainer {
   position: relative;
+  display: inline-block;
+  overflow: visible;
+  /* margin: 1rem auto; */
 }
 
 .predictionsContainer {
@@ -26,4 +29,25 @@ ul.dogs-list li img {
 
 .imageContainer img {
   /* position: absolute; */
+}
+
+.predictionBorder {
+  cursor: pointer;
+}
+
+.predictionBorder:hover {
+  stroke: #fff;
+}
+
+.textLabel {
+  background-color: grey;
+  color: white;
+  font-size: 0.8rem;
+  padding: 0 3px;
+  line-height: 20px;
+  border-radius: 2px;
+  margin: 0 auto;
+  text-align: center;
+  position: absolute;
+  transform: translateX(-50%);
 }

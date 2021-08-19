@@ -55,7 +55,6 @@ function App() {
             key={dog.url}
             ref={i === dogs.length - 1 ? lastDogRef : undefined}
           >
-            {/* <img src={dog.src} alt="Dog" /> */}
             <Dog data={dog} />
           </li>
         ))}
