@@ -1,5 +1,9 @@
 const MAX_SIZE = 500;
 
+export const drawPredictionsOnImage = (blob, predictions) => {
+  return URL.createObjectURL(blob);
+};
+
 /**
  * Wrapping fetchImage in promise to make things easier to follow
  */

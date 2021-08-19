@@ -2,17 +2,46 @@ import * as React from "react";
 
 export const Dog = ({ data }) => {
   //   console.log(data.src);
-  //   const imageRef = React.useRef();
+  const [width, setWidth] = React.useState(0);
+  const [height, setHeight] = React.useState(0);
+  const imageRef = React.useRef();
+
+  function updateDimensions() {
+    if (imageRef.current) {
+      setWidth(imageRef.current.clientWidth);
+      setHeight(imageRef.current.clientHeight);
+    }
+  }
+  // React.useEffect(() => {
   //   if (imageRef.current) {
-  //     console.log(imageRef.current.width);
+  //     console.log("has current", imageRef.current.clientWidth);
   //   }
+  // }, [data.url]);
+
+  // const imageRef = React.useCallback((ref) => {
+  //   if (!ref) return;
+
+  //   if (ref.current) {
+  //     console.log(ref.current);
+  //   }
+  // }, []);
+
+  // if (!width || !height) {
+  //   console.log("not ready");
+  //   return <></>;
+  // }
 
   return (
-    <div>
-      <svg>
+    <div className="imageContainer">
+      <svg
+        className="predictionsContainer"
+        width={width}
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+      >
         <g>
           {data.predictions.map((prediction, i) => {
-            console.log(prediction);
+            // console.log(prediction);
             return (
               <rect
                 key={`data.url-${i}`}
@@ -28,7 +57,7 @@ export const Dog = ({ data }) => {
         </g>
       </svg>
 
-      <img src={data.src} alt="dog" />
+      <img onLoad={updateDimensions} src={data.src} alt="dog" ref={imageRef} />
     </div>
   );
 };
