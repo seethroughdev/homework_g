@@ -1,5 +1,14 @@
 const MAX_SIZE = 500;
 
+/**
+ * Wrapping fetchImage in promise to make things easier to follow
+ */
+export const fetchBlobFromUrl = (url) => {
+  return new Promise((resolve) => {
+    getImageDataFromUrl(url, resolve);
+  });
+};
+
 export const getImageDataFromUrl = (url, callback) => {
   /*
   Given a URL for an image, gets the binary data for the image. The binary data

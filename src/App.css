@@ -1,16 +1,17 @@
 ul.dogs-list {
   list-style-type: none;
-  width: 500px;
+  /* width: 500px; */
   margin: 0 auto;
   padding: 0;
 }
 
 ul.dogs-list li {
   display: block;
-  margin: 1rem 0;
+  margin: 1rem auto;
+  text-align: center;
 }
 
 ul.dogs-list li img {
-  width: 100%;
-  height: auto;
+  /* width: 100%; */
+  /* height: auto; */
 }

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { fetchBlobFromUrl } from "../utils";
 
 const DOG_API_URL = "https://dog.ceo/api/breeds/image/random";
 const OPEN_VISION_API = "https://api.openvisionapi.com/api/v1/detection";
@@ -13,12 +14,12 @@ const OPEN_VISION_API = "https://api.openvisionapi.com/api/v1/detection";
  * - render image
  */
 
-const fetchBlob = async (url) => {
-  const resp = await fetch(url, {});
-  const blob = await resp.blob();
-  return blob;
-  // console.log(blob);
-};
+// const fetchBlob = async (url) => {
+//   const resp = await fetch(url, {});
+//   const blob = await resp.blob();
+//   return blob;
+//   console.log(blob);
+// };
 
 /**
  * This custom React hook manaages fetching random dogs when offset changes,
@@ -54,10 +55,11 @@ export const useDogsList = (dogFetchOffset) => {
     // wrapping in try catch to preserve current dogs, but update fetchStatus
     const fetchRandomDog = async function () {
       setDogsFetchStatus("LOADING");
+
       try {
         const resp = await fetch(DOG_API_URL, {});
         const json = await resp.json();
-        const blob = await fetchBlob(json.message);
+        const blob = await fetchBlobFromUrl(json.message);
         const predictions = await detectObject(blob);
 
         const dogData = {
@@ -65,10 +67,6 @@ export const useDogsList = (dogFetchOffset) => {
           src: URL.createObjectURL(blob),
           predictions,
         };
-
-        console.log(predictions);
-
-        // getImageDataFromUrl(json.message, console.log);
 
         setDogs((d) => [...d, dogData]);
         setDogsFetchStatus("IDLE");
