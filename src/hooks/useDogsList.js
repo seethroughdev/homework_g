@@ -14,13 +14,6 @@ const OPEN_VISION_API = "https://api.openvisionapi.com/api/v1/detection";
  * - render image
  */
 
-// const fetchBlob = async (url) => {
-//   const resp = await fetch(url, {});
-//   const blob = await resp.blob();
-//   return blob;
-//   console.log(blob);
-// };
-
 /**
  * This custom React hook manaages fetching random dogs when offset changes,
  * as well as managing the fetchStatus of the app.

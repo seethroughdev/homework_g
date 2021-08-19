@@ -2,7 +2,6 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { useDogsList } from "./hooks/useDogsList";
 import { Dog } from "./components/dog";
-// import * as utils from "./utils";
 import "./App.css";
 
 function App() {

@@ -1,41 +1,27 @@
 ul.dogs-list {
   list-style-type: none;
-  /* width: 500px; */
   margin: 0 auto;
   padding: 0;
 }
 
 ul.dogs-list li {
   display: block;
-  margin: 1rem auto;
+  margin: 2rem auto;
   text-align: center;
-}
-
-ul.dogs-list li img {
-  /* width: 100%; */
-  /* height: auto; */
 }
 
 .imageContainer {
   position: relative;
   display: inline-block;
   overflow: visible;
-  /* margin: 1rem auto; */
 }
 
 .predictionsContainer {
   position: absolute;
 }
 
-.imageContainer img {
-  /* position: absolute; */
-}
-
-.predictionBorder {
-  cursor: pointer;
-}
-
 .predictionBorder:hover {
+  cursor: pointer;
   stroke: #fff;
 }
 
@@ -43,7 +29,8 @@ ul.dogs-list li img {
   background-color: grey;
   color: white;
   font-size: 0.8rem;
-  padding: 0 3px;
+  font-weight: bold;
+  padding: 0 5px;
   line-height: 20px;
   border-radius: 2px;
   margin: 0 auto;
