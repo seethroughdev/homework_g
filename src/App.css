@@ -39,3 +39,8 @@ ul.dogs-list li {
   transform: translateX(-50%);
   user-select: none;
 }
+
+.loading-container {
+  text-align: center;
+  margin-top: 10rem;
+}

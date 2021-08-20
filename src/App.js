@@ -1,7 +1,7 @@
 import React from "react";
-import { Container } from "react-bootstrap";
-import { useDogsList } from "./hooks/useDogsList";
+import { Container, Spinner } from "react-bootstrap";
 import { PredictionImage } from "./components/predictionImage";
+import { useDogsList } from "./hooks/useDogsList";
 import "./App.css";
 
 function App() {
@@ -51,16 +51,24 @@ function App() {
       <div className="bg-dark p-5 rounded-3 mb-5">
         <h1 className="display-1 text-white">Infinite Dogs!</h1>
       </div>
-      <ul className="dogs-list">
-        {dogs.map((dog, i) => (
-          <li
-            key={dog.url}
-            ref={i === dogs.length - 1 ? lastDogRef : undefined}
-          >
-            <PredictionImage data={dog} />
-          </li>
-        ))}
-      </ul>
+
+      {/* on first load, let user know its working */}
+      {dogsFetchStatus === "LOADING" && dogs.length === 0 ? (
+        <div className="loading-container">
+          <Spinner animation="border" variant="secondary" />
+        </div>
+      ) : (
+        <ul className="dogs-list">
+          {dogs.map((dog, i) => (
+            <li
+              key={dog.url}
+              ref={i === dogs.length - 1 ? lastDogRef : undefined}
+            >
+              <PredictionImage data={dog} />
+            </li>
+          ))}
+        </ul>
+      )}
     </Container>
   );
 }

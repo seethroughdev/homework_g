@@ -1,6 +1,11 @@
 import * as React from "react";
 import { getDimensionsFromBoundingBox } from "../utils";
 
+/**
+ * This component will render an image along with predictions drawn on top.
+ * I chose to use SVG instead of canvas to preserve event interactions, but
+ * we could obviously do either.
+ */
 export const PredictionImage = ({ data }) => {
   const imageRef = React.useRef();
 
@@ -20,7 +25,7 @@ export const PredictionImage = ({ data }) => {
     }
   }
 
-  // guessing alt tag by combining predictions
+  // guessing alt tag by combining prediction labels
   const alt = data.predictions.map((p) => p.label).join(", ");
 
   return (
@@ -48,10 +53,10 @@ export const PredictionImage = ({ data }) => {
         })}
       </svg>
 
-      {/* we have to iterate through the predictions twice here for now.  This is a
-      more efficient way to create labels that wrap outside the bounding box of svg,
-      without requiring the need to create refs for every label and measure the text
-      rendering.  We could also use a <foreignObject /> in svg.
+      {/* chose to use html to render the labels as there's never a simple and efficient
+      way to render text labels with background in svg.  we could add refs and measure
+      the width of text and append a rectangle behind after drawing, but it felt simpler
+      to render with html.  we could have used a foreignObject in svg as well.
        */}
       {data.predictions.map((prediction, i) => {
         const { x, y, w, h } = getDimensionsFromBoundingBox(prediction.bbox);

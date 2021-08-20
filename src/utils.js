@@ -1,7 +1,8 @@
 const MAX_SIZE = 500;
 
 /**
- * Simple wrapper to convert bounding box to drawing dimensions
+ * Simple wrapper to convert bounding box to drawing dimensions,
+ * not necessary but it does clean up the view code.
  */
 export const getDimensionsFromBoundingBox = (bbox) => {
   return {
@@ -22,20 +23,20 @@ export const fetchBlobFromUrl = (url) => {
   });
 };
 
+/*
+Given a URL for an image, gets the binary data for the image. The binary data
+is passed to the provided callback function.
+
+Example usage:
+getImageDataFromUrl('http://my.image.jpg', function(blob) {
+    const formData = new FormData();
+    formData.append('image', blob);
+    ...
+});
+
+from https://stackoverflow.com/a/39593964
+*/
 export const getImageDataFromUrl = (url, callback) => {
-  /*
-  Given a URL for an image, gets the binary data for the image. The binary data
-  is passed to the provided callback function.
-
-  Example usage:
-  getImageDataFromUrl('http://my.image.jpg', function(blob) {
-      const formData = new FormData();
-      formData.append('image', blob);
-      ...
-  });
-
-  from https://stackoverflow.com/a/39593964
-  */
   const img = new Image();
   img.setAttribute("crossOrigin", "anonymous");
   img.onload = function (a) {
