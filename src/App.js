@@ -5,12 +5,12 @@ import { useDogsList } from "./hooks/useDogsList";
 import "./App.css";
 
 function App() {
-  // We use the "fetchOffset" to signify changes to the React, useEffect.  This allows us to have full control
-  // when we want the useDogsList to attempt a new fetch.
-  const [dogFetchOffset, setDogFetchOffset] = React.useState(0);
+  // We're using a simple number increment to communicate a dirty state in the useDogsList hook.
+  const [fetchOffset, setFetchOffset] = React.useState(0);
 
-  // All state of the dogs are returned here, we wrap the fetch in a custom hook to support other data like fetchStatus.
-  const { dogs, dogsFetchStatus } = useDogsList(dogFetchOffset);
+  // All state of the dogs are returned here and status of the fetch is returned here, each time the fetchOffset is changed,
+  // the custom hook will run
+  const { dogs, dogsFetchStatus } = useDogsList(fetchOffset);
 
   // We are using the Intersection Observer API to watch for visible dom elements on the screen,
   // https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
@@ -20,9 +20,8 @@ function App() {
 
   // Wrapping a ref in a useCallback is a way to apply changes to the actual react dom implementation.
   // https://medium.com/welldone-software/usecallback-might-be-what-you-meant-by-useref-useeffect-773bc0278ae
-  // here we watch for fetchStatus changes, and update the observer.  It also allows us to manually force the
-  // dogs fetch by changing the offset.
-  const lastDogRef = React.useCallback(
+  // here we watch for fetchStatus changes, and update the observer.  Then we can force the fetch by changing the offset.
+  const lastImageRef = React.useCallback(
     (ref) => {
       if (!ref || dogsFetchStatus === "LOADING") return;
 
@@ -34,7 +33,7 @@ function App() {
       observerRef.current = new IntersectionObserver(
         (entries) => {
           if (entries.length < 1) return;
-          setDogFetchOffset((offset) =>
+          setFetchOffset((offset) =>
             entries[0].isIntersecting ? offset + 1 : offset
           );
         },
@@ -52,7 +51,7 @@ function App() {
         <h1 className="display-1 text-white">Infinite Dogs!</h1>
       </div>
 
-      {/* on first load, let user know its working */}
+      {/* on initial load, let user know its working */}
       {dogsFetchStatus === "LOADING" && dogs.length === 0 ? (
         <div className="loading-container">
           <Spinner animation="border" variant="secondary" />
@@ -62,7 +61,7 @@ function App() {
           {dogs.map((dog, i) => (
             <li
               key={`${dog.url}-${i}`}
-              ref={i === dogs.length - 1 ? lastDogRef : undefined}
+              ref={i === dogs.length - 1 ? lastImageRef : undefined}
             >
               <PredictionImage data={dog} />
             </li>
