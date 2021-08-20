@@ -31,12 +31,15 @@ function App() {
         observerRef.current.disconnect();
       }
 
-      observerRef.current = new IntersectionObserver((entries) => {
-        if (entries.length < 1) return;
-        setDogFetchOffset((offset) =>
-          entries[0].isIntersecting ? offset + 1 : offset
-        );
-      });
+      observerRef.current = new IntersectionObserver(
+        (entries) => {
+          if (entries.length < 1) return;
+          setDogFetchOffset((offset) =>
+            entries[0].isIntersecting ? offset + 1 : offset
+          );
+        },
+        { rootMargin: "0px 0px 5000px 0px" }
+      );
 
       observerRef.current.observe(ref);
     },
