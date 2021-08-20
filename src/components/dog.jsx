@@ -21,9 +21,9 @@ export const Dog = ({ data }) => {
   }
 
   return (
-    <div className="imageContainer">
+    <div className="image-container">
       <svg
-        className="predictionsContainer"
+        className="predictions-container"
         viewBox={`0 0 ${width} ${height}`}
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -42,7 +42,7 @@ export const Dog = ({ data }) => {
                 height={rectHeight}
                 fillOpacity={0.0}
                 stroke={"#00ff00"}
-                className="predictionBorder"
+                className="prediction-border"
               />
             </g>
           );
@@ -61,7 +61,7 @@ export const Dog = ({ data }) => {
         const y = prediction.bbox.y1;
         return (
           <span
-            className="textLabel"
+            className="text-label"
             key={`label-${i}-${prediction.label}`}
             style={{
               top: y + rectHeight - 10,

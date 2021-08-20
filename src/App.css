@@ -10,32 +10,32 @@ ul.dogs-list li {
   text-align: center;
 }
 
-.imageContainer {
+.image-container {
   position: relative;
   display: inline-block;
   overflow: visible;
 }
 
-.predictionsContainer {
+.predictions-container {
   position: absolute;
 }
 
-.predictionBorder:hover {
+.prediction-border:hover {
   cursor: pointer;
   stroke: #fff;
 }
 
-.textLabel {
+.text-label {
   background-color: grey;
+  border-radius: 2px;
   color: white;
   font-size: 0.8rem;
   font-weight: bold;
-  padding: 0 5px;
   line-height: 20px;
-  border-radius: 2px;
   margin: 0 auto;
-  text-align: center;
+  padding: 0 5px;
   position: absolute;
+  text-align: center;
   transform: translateX(-50%);
   user-select: none;
 }
