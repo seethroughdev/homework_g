@@ -54,7 +54,7 @@ export const Dog = ({ data }) => {
       without requiring the need to create refs for every label and measure the text
       rendering.  We could also use a <foreignObject /> in svg.
        */}
-      {data.predictions.map((prediction) => {
+      {data.predictions.map((prediction, i) => {
         const rectWidth = prediction.bbox.x2 - prediction.bbox.x1;
         const rectHeight = prediction.bbox.y2 - prediction.bbox.y1;
         const x = prediction.bbox.x1;
@@ -62,6 +62,7 @@ export const Dog = ({ data }) => {
         return (
           <span
             className="textLabel"
+            key={`label-${i}-${prediction.label}`}
             style={{
               top: y + rectHeight - 10,
               left: x + rectWidth / 2,

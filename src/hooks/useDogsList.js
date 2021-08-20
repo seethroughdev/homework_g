@@ -50,6 +50,7 @@ export const useDogsList = (dogFetchOffset) => {
       setDogsFetchStatus("LOADING");
 
       try {
+        // here is where we go through the setup actions noted above.
         const resp = await fetch(DOG_API_URL, {});
         const json = await resp.json();
         const blob = await fetchBlobFromUrl(json.message);
@@ -61,6 +62,7 @@ export const useDogsList = (dogFetchOffset) => {
           predictions,
         };
 
+        // set the internal hook state
         setDogs((d) => [...d, dogData]);
         setDogsFetchStatus("IDLE");
       } catch {
