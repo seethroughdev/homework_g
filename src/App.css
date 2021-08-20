@@ -37,4 +37,5 @@ ul.dogs-list li {
   text-align: center;
   position: absolute;
   transform: translateX(-50%);
+  user-select: none;
 }

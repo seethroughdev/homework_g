@@ -1,12 +1,19 @@
 import * as React from "react";
 
 export const Dog = ({ data }) => {
+  const imageRef = React.useRef();
+
+  /**
+   * To keep the svg fluid, we need to use viewbox, and in
+   * order to do that we need to know the dimensions of the image.
+   * since we're loading the image from a blob, we don't know until
+   * the image is loaded.  here we use the onLoad event to set the dimensions
+   * of the svg to the rendered image.
+   */
   const [width, setWidth] = React.useState(0);
   const [height, setHeight] = React.useState(0);
 
-  const imageRef = React.useRef();
-
-  function updateDimensions() {
+  function handleDimensions() {
     if (imageRef.current) {
       setWidth(imageRef.current.clientWidth);
       setHeight(imageRef.current.clientHeight);
@@ -65,7 +72,7 @@ export const Dog = ({ data }) => {
         );
       })}
 
-      <img onLoad={updateDimensions} src={data.src} alt="dog" ref={imageRef} />
+      <img onLoad={handleDimensions} src={data.src} alt="dog" ref={imageRef} />
     </div>
   );
 };

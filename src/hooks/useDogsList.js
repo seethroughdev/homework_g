@@ -5,13 +5,13 @@ const DOG_API_URL = "https://dog.ceo/api/breeds/image/random";
 const OPEN_VISION_API = "https://api.openvisionapi.com/api/v1/detection";
 
 /**
- * - fetch image
- * - convert to binary
- * - send to open vision
- * - get coordinates for bounding box
- * - render bounding boxes
- * - save image
- * - render image
+ * The setup actions for displaying the images includes several operations:
+ *
+ * - fetch image url (async)
+ * - convert image to binary (async)
+ * - send blob to open vision to get predictions (async)
+ * - save data to dogs list so we can render in a separate component
+ *
  */
 
 /**
