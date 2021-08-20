@@ -61,7 +61,7 @@ function App() {
         <ul className="dogs-list">
           {dogs.map((dog, i) => (
             <li
-              key={dog.url}
+              key={`${dog.url}-${i}`}
               ref={i === dogs.length - 1 ? lastDogRef : undefined}
             >
               <PredictionImage data={dog} />
