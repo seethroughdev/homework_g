@@ -1,6 +1,18 @@
 const MAX_SIZE = 500;
 
 /**
+ * Simple wrapper to convert bounding box to drawing dimensions
+ */
+export const getDimensionsFromBoundingBox = (bbox) => {
+  return {
+    x: bbox.x1 || 0,
+    y: bbox.y1 || 0,
+    w: (bbox.x2 || 0) - (bbox.x1 || 0),
+    h: (bbox.y2 || 0) - (bbox.y1 || 0),
+  };
+};
+
+/**
  * Wrapping fetchImage in promise instead of callback to keep
  * the async operations consistent in hooks
  */

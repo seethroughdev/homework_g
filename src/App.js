@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { useDogsList } from "./hooks/useDogsList";
-import { Dog } from "./components/dog";
+import { PredictionImage } from "./components/predictionImage";
 import "./App.css";
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
             entries[0].isIntersecting ? offset + 1 : offset
           );
         },
-        { rootMargin: "0px 0px 5000px 0px" }
+        { rootMargin: "0px 0px 1500px 0px" }
       );
 
       observerRef.current.observe(ref);
@@ -57,7 +57,7 @@ function App() {
             key={dog.url}
             ref={i === dogs.length - 1 ? lastDogRef : undefined}
           >
-            <Dog data={dog} />
+            <PredictionImage data={dog} />
           </li>
         ))}
       </ul>
